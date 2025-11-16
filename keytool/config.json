@@ -1,12 +1,21 @@
 {
-  "name": "Keytool Add-on",
-  "version": "1.0",
+  "name": "Keytool",
   "slug": "keytool",
-  "description": "Add-on with Java keytool for Home Assistant OS",
+  "version": "1.2.0",
+  "arch": ["amd64", "armv7", "arm64"],
   "startup": "application",
-  "boot": "auto",
-  "arch": ["amd64", "armv7", "aarch64"],
   "host_network": false,
-  "options": {},
-  "schema": {}
+  "host_volumes": ["/ssl:/ssl:ro"],
+  "map": ["config:ro"],
+  "options": {
+    "keystore_password": "changeit",
+    "key_alias": "mykey",
+    "keystore_file": "/data/keystore.jks"
+  },
+  "schema": {
+    "keystore_password": "str",
+    "key_alias": "str",
+    "keystore_file": "str"
+  },
+  "webui": "index.html"
 }
