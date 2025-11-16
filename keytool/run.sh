@@ -1,25 +1,25 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
 
 PASSWORD=$(bashio::config 'password')
-if [ -z "$PASSWORD" ]; then
-  bashio::exit.critical "Password required"
+if ! bashio::config.has_value 'password' || [ -z "$PASSWORD" ]; then
+  bashio::exit.critical "Password required in configuration"
 fi
 
-# Create PKCS12 keystore from HA SSL cert and key
-keytool -importkeystore \
-  -srckeystore /dev/null \
-  -srcstoretype PKCS12 \
-  -destkeystore /share/unifi.p12 \
-  -deststoretype PKCS12 \
-  -srcstorepass "" \
-  -deststorepass "$PASSWORD" \
-  -alias unifi \
-  -keyalg RSA \
-  -keysize 2048 \
-  -dname "CN=unifi" \
-  -noprompt
+if [ ! -f "/ssl/fullchain.pem" ] || [ ! -f "/ssl/privkey.pem" ]; then
+  bashio::exit.critical "HA SSL certs not found in /ssl (enable full SSL in Network settings)"
+fi
 
-# Alternative: Use openssl for full cert+key if needed (replace above if keytool fails)
-# openssl pkcs12 -export -in /ssl/fullchain.pem -inkey /ssl/privkey.pem -out /share/unifi.p12 -name unifi -passout pass:$PASSWORD
+bashio::info "Generating PKCS12 keystore from /ssl certs..."
 
-bashio::exit.ok "Keystore generated at /share/unifi.p12"
+openssl pkcs12 -export \
+  -in /ssl/fullchain.pem \
+  -inkey /ssl/privkey.pem \
+  -out /share/unifi.p12 \
+  -name unifi \
+  -passout pass:$PASSWORD
+
+if [ $? -eq 0 ]; then
+  bashio::exit.ok "Success: Keystore generated at /share/unifi.p12"
+else
+  bashio::exit.critical "OpenSSL failed to generate keystore"
+fi
