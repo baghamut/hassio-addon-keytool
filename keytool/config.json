@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1004",
+  "version": "1.0.1006",
   "slug": "keytool",
   "name": "Keytool",
   "description": "Generate PKCS12 keystore for Unifi from HA SSL",
