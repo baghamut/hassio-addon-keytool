@@ -9,17 +9,14 @@ if [ ! -f "/ssl/fullchain.pem" ] || [ ! -f "/ssl/privkey.pem" ]; then
   bashio::exit.critical "HA SSL certs not found in /ssl (enable full SSL in Network settings)"
 fi
 
-bashio::info "Generating PKCS12 keystore from /ssl certs..."
+echo "Generating PKCS12 keystore from /ssl certs..."
 
-openssl pkcs12 -export \
-  -in /ssl/fullchain.pem \
-  -inkey /ssl/privkey.pem \
-  -out /share/unifi.p12 \
-  -name unifi \
-  -passout pass:$PASSWORD
+openssl pkcs12 -export   -in /ssl/fullchain.pem   -inkey /ssl/privkey.pem   -out /share/unifi.p12   -name unifi   -passout pass:$PASSWORD
 
 if [ $? -eq 0 ]; then
-  bashio::exit.ok "Success: Keystore generated at /share/unifi.p12"
+  echo "Success: Keystore generated at /share/unifi.p12"
+  bashio::exit.ok
 else
-  bashio::exit.critical "OpenSSL failed to generate keystore"
+  echo "OpenSSL failed to generate keystore - check certs/privkey"
+  bashio::exit.critical "OpenSSL failed"
 fi
