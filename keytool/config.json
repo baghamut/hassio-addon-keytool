@@ -14,7 +14,7 @@
     "password": "str"
   },
   "ports": {},
-  "image": "keytool",
+  "image": "baghamut/hassio-addon-keytool",
   "environment": {},
   "backup_exclude": ["share/unifi.p12"]
 }
