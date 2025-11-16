@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
 
-# Manual bashio setup (HA env vars from container)
-export HASSIO_TOKEN=$HASSIO_TOKEN
-export SUPERVISOR=$SUPERVISOR
-source /usr/lib/hassio-addons/bashio 2>/dev/null || {
-  echo "bashio not available, using fallback"
-  bashio() { echo "fallback: $@" ; }
-}
+# Read password from HA mounted /data/options.json (format: {"password": "secret123", ...})
+if [ ! -f "/data/options.json" ]; then
+  echo "Config file /data/options.json not found"
+  exit 1
+fi
 
-PASSWORD=$(bashio::config 'password')
+PASSWORD=$(grep '"password"' /data/options.json | cut -d '"' -f4)
 if [ -z "$PASSWORD" ]; then
-  echo "Password required in configuration"
+  echo "Password required in configuration (/data/options.json empty or missing)"
   exit 1
 fi
 
