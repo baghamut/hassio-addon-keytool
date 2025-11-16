@@ -1,7 +1,7 @@
 {
   "name": "Keytool",
   "slug": "keytool",
-  "version": "1.2.1002",
+  "version": "1.2.1003",
   "description": "Workaround for Unifi to initiate keystore",
   "arch": ["amd64", "armv7", "aarch64"],
   "startup": "application",
