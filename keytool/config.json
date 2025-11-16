@@ -6,7 +6,7 @@
   "arch": ["amd64", "armv7", "aarch64"],
   "startup": "application",
   "host_network": false,
-  "host_volumes": ["/ssl:/ssl:ro"],
+  "volumes": ["/ssl:/ssl:ro"],
   "map": ["config:ro"],
   "options": {
     "keystore_password": "changeit",
