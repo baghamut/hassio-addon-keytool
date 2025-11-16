@@ -7,6 +7,7 @@
   "startup": "application",
   "boot": "auto",
   "map": ["ssl:rw", "share:rw", "config:rw"],
+  "build_from": "alpine:latest",
   "options": {
     "password": "Password@2025"
   },
@@ -14,7 +15,7 @@
     "password": "str"
   },
   "ports": {},
-  "image": "baghamut/hassio-addon-keytool",
+  "image": "keytool",
   "environment": {},
   "backup_exclude": ["share/unifi.p12"]
 }
