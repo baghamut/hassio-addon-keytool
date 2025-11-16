@@ -1,0 +1,12 @@
+{
+  "name": "Keytool Add-on",
+  "version": "1.0",
+  "slug": "keytool",
+  "description": "Add-on with Java keytool for Home Assistant OS",
+  "startup": "application",
+  "boot": "auto",
+  "arch": ["amd64", "armv7", "aarch64"],
+  "host_network": false,
+  "options": {},
+  "schema": {}
+}
