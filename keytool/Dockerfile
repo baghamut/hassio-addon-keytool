@@ -1,8 +1,7 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
-FROM ${BUILD_FROM}
+ARG BUILD_FROM
+FROM $BUILD_FROM
 
-COPY run.sh /run.sh
-RUN chmod a+x /run.sh
+RUN apk add --no-cache openjdk17-jre
 
-CMD ["/init"]
-# Fix single CMD
+COPY run.sh /
+RUN chmod +x /run.sh

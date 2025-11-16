@@ -1,18 +1,25 @@
-#!/usr/bin/with-contenv bash
-set -e
+#!/bin/bash
 
-cp /ssl/privkey.pem /data/privkey.pem
-cp /ssl/fullchain.pem /data/fullchain.pem
-
-echo "Generating PKCS12 keystore from HAOS SSL certs..."
-if [ ! -f /data/keystore.p12 ]; then
-  openssl pkcs12 -export -in /data/fullchain.pem -inkey /data/privkey.pem -out /data/keystore.p12 -name "$KEY_ALIAS" -password pass:"$KEYSTORE_PASS"
+PASSWORD=$(bashio::config 'password')
+if [ -z "$PASSWORD" ]; then
+  bashio::exit.critical "Password required"
 fi
 
-echo "Importing PKCS12 keystore into Java keystore..."
-keytool -importkeystore -deststorepass "$KEYSTORE_PASS" -destkeypass "$KEYSTORE_PASS" -destkeystore "$KEYSTORE_FILE" -srckeystore /data/keystore.p12 -srcstoretype PKCS12 -alias "$KEY_ALIAS" -srcstorepass "$KEYSTORE_PASS" -noprompt
+# Create PKCS12 keystore from HA SSL cert and key
+keytool -importkeystore \
+  -srckeystore /dev/null \
+  -srcstoretype PKCS12 \
+  -destkeystore /share/unifi.p12 \
+  -deststoretype PKCS12 \
+  -srcstorepass "" \
+  -deststorepass "$PASSWORD" \
+  -alias unifi \
+  -keyalg RSA \
+  -keysize 2048 \
+  -dname "CN=unifi" \
+  -noprompt
 
-echo "Keystore is ready at $KEYSTORE_FILE"
-echo "Add-on is now running..."
+# Alternative: Use openssl for full cert+key if needed (replace above if keytool fails)
+# openssl pkcs12 -export -in /ssl/fullchain.pem -inkey /ssl/privkey.pem -out /share/unifi.p12 -name unifi -passout pass:$PASSWORD
 
-tail -f /dev/null
+bashio::exit.ok "Keystore generated at /share/unifi.p12"

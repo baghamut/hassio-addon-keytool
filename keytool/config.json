@@ -1,21 +1,18 @@
 {
-  "name": "Keytool",
+  "version": "1.0.1004",
   "slug": "keytool",
-  "version": "1.2.1003",
-  "description": "Workaround for Unifi to initiate keystore",
-  "arch": ["amd64", "armv7", "aarch64"],
-  "startup": "application",
-  "host_network": false,
-  "volumes": ["/ssl:/ssl:ro"],
-  "map": ["config:ro"],
-  "options": {
-    "keystore_password": "changeit",
-    "key_alias": "mykey",
-    "keystore_file": "/data/keystore.jks"
-  },
+  "name": "Keytool",
+  "description": "Generate PKCS12 keystore for Unifi from HA SSL",
+  "arch": ["amd64"],
+  "startup": "once",
+  "boot": "auto",
+  "init": false,
+  "map": ["ssl:ro", "share:rw"],
   "schema": {
-    "keystore_password": "str",
-    "key_alias": "str",
-    "keystore_file": "str"
-  }
+    "password": "str"
+  },
+  "options": {
+    "password": null
+  },
+  "url": "https://github.com/baghamut/hassio-addon-keytool"
 }
