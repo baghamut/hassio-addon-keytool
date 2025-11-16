@@ -1,12 +1,12 @@
 {
-  "version": "1.0.1009",
+  "version": "1.0.1010",
   "slug": "keytool",
   "name": "Keytool",
   "description": "Generate PKCS12 keystore for Unifi from HA SSL",
   "arch": ["amd64"],
   "startup": "once",
   "boot": "auto",
-  "init": false, "hassio_role": "manager",
+  "init": true,
   "map": ["ssl:ro", "share:rw"],
   "schema": {
     "password": "str"

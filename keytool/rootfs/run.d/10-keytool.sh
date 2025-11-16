@@ -11,7 +11,12 @@ fi
 
 echo "Generating PKCS12 keystore from /ssl certs..."
 
-openssl pkcs12 -export   -in /ssl/fullchain.pem   -inkey /ssl/privkey.pem   -out /share/unifi.p12   -name unifi   -passout pass:$PASSWORD
+openssl pkcs12 -export \
+  -in /ssl/fullchain.pem \
+  -inkey /ssl/privkey.pem \
+  -out /share/unifi.p12 \
+  -name unifi \
+  -passout pass:$PASSWORD
 
 if [ $? -eq 0 ]; then
   echo "Success: Keystore generated at /share/unifi.p12"
