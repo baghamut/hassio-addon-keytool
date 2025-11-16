@@ -1,7 +1,7 @@
 {
   "name": "Keytool",
   "slug": "keytool",
-  "version": "1.1",
+  "version": "1.2.0",
   "arch": ["amd64", "armv7", "arm64"],
   "startup": "application",
   "host_network": false,
