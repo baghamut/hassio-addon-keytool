@@ -1,1 +1,5 @@
-{ "name": "Keytool Add-on Repository" }
+{
+  "name": "Keytool Add-on Repository",
+  "url": "https://github.com/baghamut/hassio-addon-keytool",
+  "maintainer": "baghamut"
+}
