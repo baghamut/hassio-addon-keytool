@@ -1,8 +1,5 @@
-FROM eclipse-temurin:17-jdk
-
-WORKDIR /addon
-
+FROM ghcr.io/home-assistant/amd64-base:latest
+RUN mkdir -p /ssl
 COPY run.sh /run.sh
-RUN chmod a+x /run.sh
-
+RUN chmod +x /run.sh
 CMD ["/run.sh"]
