@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 set -e
 
-# Load config options from environment variables or fallback to defaults
-KEYSTORE_PASS="${KEYSTORE_PASSWORD:-changeit}"
-KEY_ALIAS="${KEY_ALIAS:-mykey}"
-KEYSTORE_FILE="${KEYSTORE_FILE:-/data/keystore.jks}"
+cp /ssl/privkey.pem /data/privkey.pem
+cp /ssl/fullchain.pem /data/fullchain.pem
 
 echo "Generating PKCS12 keystore from HAOS SSL certs..."
 if [ ! -f /data/keystore.p12 ]; then
-  openssl pkcs12 -export -in /ssl/fullchain.pem -inkey /ssl/privkey.pem -out /data/keystore.p12 -name "$KEY_ALIAS" -password pass:"$KEYSTORE_PASS"
+  openssl pkcs12 -export -in /data/fullchain.pem -inkey /data/privkey.pem -out /data/keystore.p12 -name "$KEY_ALIAS" -password pass:"$KEYSTORE_PASS"
 fi
 
 echo "Importing PKCS12 keystore into Java keystore..."
@@ -17,5 +15,4 @@ keytool -importkeystore -deststorepass "$KEYSTORE_PASS" -destkeypass "$KEYSTORE_
 echo "Keystore is ready at $KEYSTORE_FILE"
 echo "Add-on is now running..."
 
-# Keep the container alive so Home Assistant sees add-on as running
 tail -f /dev/null
