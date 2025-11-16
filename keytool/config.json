@@ -1,18 +1,20 @@
 {
-  "version": "1.0.2",
+  "version": "1.0.4",
   "slug": "keytool",
-  "name": "Keytool",
-  "description": "Generate PKCS12 keystore for Unifi from HA SSL certs",
-  "arch": ["amd64"],
-  "startup": "once",
+  "name": "Keytool Keystore Generator",
+  "description": "Auto-generate PKCS12 keystore for Unifi from HA /ssl certs on changes",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "startup": "application",
   "boot": "auto",
-  "init": false,
-  "map": ["ssl:ro", "share:rw"],
+  "map": ["ssl:rw", "share:rw", "config:rw"],
+  "options": {
+    "password": "Password@2025"
+  },
   "schema": {
     "password": "str"
   },
-  "options": {
-    "password": null
-  },
-  "url": "https://github.com/baghamut/hassio-addon-keytool"
+  "ports": {},
+  "image": "keytool",
+  "environment": {},
+  "backup_exclude": ["share/unifi.p12"]
 }
