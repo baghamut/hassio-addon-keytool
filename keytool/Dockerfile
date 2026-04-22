@@ -1,11 +1,11 @@
-FROM alpine:latest
+ARG BUILD_FROM
+FROM $BUILD_FROM
 
-# Install bash, openssl, jq, inotify-tools
-RUN apk add --no-cache bash openssl jq inotify-tools
+# Install deps
+RUN apk add --no-cache openssl keytool-openjdk8 bash docker-cli inotify-tools
 
-# Copy run.sh
-COPY run.sh /run.sh
-RUN chmod +x /run.sh
+# Copy rootfs
+COPY rootfs/ /
 
-# Set ENTRYPOINT to run.sh (persistent app)
-ENTRYPOINT ["/run.sh"]
+WORKDIR /root
+CMD ["/init"]
