@@ -1,20 +1,25 @@
 {
-  "version": "1.0.6",
-  "slug": "keytool",
   "name": "Keytool Keystore Generator",
-  "description": "Auto-generate PKCS12 keystore for Unifi from HA /ssl certs on changes",
+  "version": "1.0.7",
+  "slug": "keytool",
+  "description": "Generates PKCS12 keystores from /ssl certs. Auto-imports to UniFi.",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "startup": "application",
   "boot": "auto",
-  "map": ["ssl:rw", "share:rw", "config:rw"],
-  "build_from": "ghcr.io/home-assistant/amd64-base:latest",
+  "map": ["ssl:rw", "share:rw"],
   "options": {
-    "password": "Password@2025"
+    "password": "Password",
+    "unifi_import": true,
+    "unifi_pass": "aircontrolenterprise",
+    "unifi_alias": "unifi"
   },
   "schema": {
-    "password": "str"
+    "password": "str",
+    "unifi_import": "bool",
+    "unifi_pass": "str",
+    "unifi_alias": "str?"
   },
-  "ports": {},
-  "environment": {},
-  "backup_exclude": ["share/unifi.p12"]
+  "ports": {
+    "8080/tcp": null
+  }
 }
