@@ -1,6 +1,6 @@
 {
   "name": "Keytool Keystore Generator",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "slug": "keytool",
   "description": "Generates PKCS12 keystores from /ssl certs. Auto-imports to UniFi.",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
