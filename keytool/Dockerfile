@@ -5,7 +5,10 @@ RUN apk add --no-cache \
     openssl \
     openjdk17-jre-headless \
     bash \
-    docker \
+    docker-cli \
     inotify-tools
 
-COPY rootfs/ /
+COPY run.sh /run.sh
+RUN chmod +x /run.sh
+
+CMD ["/run.sh"]
