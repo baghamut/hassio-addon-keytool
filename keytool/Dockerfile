@@ -1,6 +1,9 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
+# Update packages first to avoid conflicts
+RUN apk update && apk upgrade --no-cache
+
 RUN apk add --no-cache \
     openssl \
     openjdk17-jre-headless \
