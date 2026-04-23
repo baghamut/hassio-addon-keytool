@@ -4,6 +4,7 @@
   "slug": "keytool",
   "description": "Generates PKCS12 keystores from /ssl certs. Auto-imports to UniFi.",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "init": false,
   "startup": "application",
   "boot": "auto",
   "map": ["ssl:rw", "share:rw"],
